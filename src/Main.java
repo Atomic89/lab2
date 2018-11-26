@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String ip = "", mask = "", gateway = "", dns = "";
         boolean check = false;
+        Process pp = null, pp2 = null;
         System.out.println("Выберите какие настройки включить 1 или 2?");
         System.out.print("Настройка № = ");
         Scanner in = new Scanner(System.in);
@@ -33,9 +34,15 @@ public class Main {
                 "mask=", mask, "gateway=", gateway};
         String[] command2 = { "netsh", "interface", "ip", "set", "dnsservers",
                 "name=", "Local Area Connection" ,"source=static", "address=", dns};
+
         if(check) {
-            Process pp = java.lang.Runtime.getRuntime().exec(command1);
-            Process pp2 = java.lang.Runtime.getRuntime().exec(command2);
+             pp = java.lang.Runtime.getRuntime().exec(command1);
+             pp2 = java.lang.Runtime.getRuntime().exec(command2);
+        }
+
+        if(pp != null && pp2 != null) {
+            pp.destroy();
+            pp2.destroy();
         }
     }
 }
